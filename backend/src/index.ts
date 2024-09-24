@@ -8,14 +8,13 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-connectDB();
-
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from TypeScript server!');
+app.get('/api/hello', (req: Request, res: Response) => {
+  res.json({message: 'Hello from the backend!'});
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  connectDB();
 });
