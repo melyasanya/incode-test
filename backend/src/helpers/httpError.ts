@@ -1,5 +1,5 @@
-interface HttpError extends Error {
-  status: number;
+export interface HttpError extends Error {
+  status?: number;
 }
 
 const errorMessageList: Record<number, string> = {

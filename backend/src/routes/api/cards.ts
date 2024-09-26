@@ -1,21 +1,21 @@
 import {Router} from 'express';
-// import {
-//   createCard,
-//   getCardsByBoard,
-//   updateCard,
-//   deleteCard,
-// } from '../controllers/cardController';
-// import {ctrlWrapper} from '../../helpers/ctrlWrapper';
-// import {isValidId} from '../../middlewares/isValidId';
+
+import {ctrlWrapper} from '../../helpers/ctrlWrapper';
+import {
+  createCard,
+  deleteCard,
+  getCardsByBoard,
+  updateCard,
+} from '../../controllers/cards';
 
 const router = Router();
 
-// router.post('/cards', ctrlWrapper(createCard));
+router.post('/', ctrlWrapper(createCard));
 
-// router.get('/boards/:boardId/cards', isValidId, ctrlWrapper(getCardsByBoard));
+router.get('/:boardId', ctrlWrapper(getCardsByBoard));
 
-// router.put('/cards/:id', isValidId, ctrlWrapper(updateCard));
+router.put('/:id', ctrlWrapper(updateCard));
 
-// router.delete('/cards/:id', isValidId, ctrlWrapper(deleteCard));
+router.delete('/:id', ctrlWrapper(deleteCard));
 
 export default router;

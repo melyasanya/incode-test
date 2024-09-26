@@ -1,17 +1,17 @@
 import mongoose, {Schema, Document} from 'mongoose';
 
-interface ICard extends Document {
+export interface ICard extends Document {
   title: string;
   description: string;
-  status: 'ToDo' | 'InProgress' | 'Done';
-  board: mongoose.Schema.Types.ObjectId;
+  status: 'toDo' | 'inProgress' | 'done';
+  board?: mongoose.Schema.Types.ObjectId;
 }
 
 const cardSchema = new Schema<ICard>({
   title: {type: String, required: true},
-  description: {type: String},
-  status: {type: String, enum: ['ToDo', 'InProgress', 'Done'], required: true},
-  board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board', required: true},
+  description: {type: String, required: true},
+  status: {type: String, enum: ['toDo', 'inProgress', 'done'], required: true},
+  board: {type: mongoose.Schema.Types.ObjectId, ref: 'boards'},
 });
 
-export const Card = mongoose.model<ICard>('Card', cardSchema);
+export const Card = mongoose.model<ICard>('cards', cardSchema);
