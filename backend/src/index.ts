@@ -1,6 +1,8 @@
-import express, {Request, Response} from 'express';
+import express from 'express';
 import connectDB from './server';
 import dotenv from 'dotenv';
+import boardsRouter from './routes/api/boards';
+import cardsRouter from './routes/api/cards';
 
 dotenv.config();
 
@@ -10,9 +12,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/api/hello', (req: Request, res: Response) => {
-  res.json({message: 'Hello from the backend!'});
-});
+app.use('/api/boards', boardsRouter);
+app.use('/api/cards', cardsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
