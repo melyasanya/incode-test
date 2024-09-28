@@ -18,6 +18,11 @@ app.use(express.json());
 app.use('/api/boards', boardsRouter);
 app.use('/api/cards', cardsRouter);
 
+app.head('/api/head', (req, res) => {
+  res.setHeader('Custom-Header', 'YourValue');
+  res.status(200).end();
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();

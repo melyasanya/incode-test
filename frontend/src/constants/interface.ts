@@ -7,9 +7,9 @@ export interface IBoard {
 export interface ICard {
   _id: string;
   title: string;
-  description?: string;
+  description: string;
   status: 'toDo' | 'inProgress' | 'done';
-  board: string;
+  board: string | undefined;
 }
 
 export interface ErrorType {

@@ -4,7 +4,7 @@ export interface ICard extends Document {
   title: string;
   description: string;
   status: 'toDo' | 'inProgress' | 'done';
-  board?: mongoose.Schema.Types.ObjectId;
+  board: mongoose.Schema.Types.ObjectId;
 }
 
 const cardSchema = new Schema<ICard>({

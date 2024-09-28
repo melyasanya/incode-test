@@ -1,3 +1,3 @@
 import {RootState} from './store';
 
-export const selectIsOpen = (state: RootState) => state.isOpen;
+export const selectBoard = (state: RootState) => state.boards;

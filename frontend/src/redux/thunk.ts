@@ -74,7 +74,7 @@ export const updateBoard = createAsyncThunk<
 
 export const fetchCardsByBoard = createAsyncThunk<
   ICard[],
-  string,
+  string | undefined,
   {rejectValue: ErrorType}
 >('cards/fetchCardsByBoard', async (boardId, {rejectWithValue}) => {
   try {
@@ -91,7 +91,7 @@ export const fetchCardsByBoard = createAsyncThunk<
 
 export const createCard = createAsyncThunk<
   ICard,
-  {title: string; description: string; status: string; id: string},
+  {title: string; description: string; status: string; id: string | undefined},
   {rejectValue: ErrorType}
 >('cards/createCard', async (cardData, {rejectWithValue}) => {
   try {
@@ -110,12 +110,13 @@ export const createCard = createAsyncThunk<
 });
 
 export const deleteCard = createAsyncThunk<
-  void,
+  string,
   string,
   {rejectValue: ErrorType}
 >('cards/deleteCard', async (cardId, {rejectWithValue}) => {
   try {
     await axios.delete(`/api/cards/${cardId}`);
+    return cardId;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
       return rejectWithValue({
