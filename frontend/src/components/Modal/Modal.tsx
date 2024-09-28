@@ -1,37 +1,30 @@
 import type {FC} from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+
 import {Input} from '../Input/Input';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectBoard} from '../../redux/selectors';
-import {createCard} from '../../redux/thunk';
-import {AppDispatch} from '../../redux/store';
+import {boards} from '../../constants/boards';
+import {Inputs} from '../../constants/interface';
 
 interface Props {
+  title?: string;
+  description?: string;
+  edit?: boolean;
+  status?: string;
   onClick: () => void;
-  tableId: string;
+  onSubmit: SubmitHandler<Inputs>;
 }
 
-export interface Inputs {
-  title: string;
-  description: string;
-}
-
-export const Modal: FC<Props> = ({onClick, tableId}) => {
-  const {register, handleSubmit} = useForm<Inputs>();
-  const board = useSelector(selectBoard);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const {title, description} = data;
-    const newTask = {
-      title,
-      description,
-      status: tableId,
-      id: board?._id,
-    };
-    dispatch(createCard(newTask));
-    onClick();
-  };
+export const Modal: FC<Props> = ({
+  onClick,
+  onSubmit,
+  title,
+  description,
+  edit,
+  status,
+}) => {
+  const {register, handleSubmit} = useForm<Inputs>({
+    defaultValues: {title, description, status},
+  });
 
   return (
     <div className="fixed inset-0 z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
@@ -60,6 +53,18 @@ export const Modal: FC<Props> = ({onClick, tableId}) => {
                   })}
                   text="Description"
                 />
+                {edit && (
+                  <select
+                    {...register('status', {required: true})}
+                    className="border p-2 rounded"
+                  >
+                    {boards.map((board) => (
+                      <option key={board.id} value={board.id}>
+                        {board.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
                 <button type="submit">Submit</button>
               </form>
             </div>

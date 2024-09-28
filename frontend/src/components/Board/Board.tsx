@@ -1,10 +1,10 @@
-import {useState, type FC} from 'react';
+import type {FC} from 'react';
+
 import {Button} from '../Button/Button';
 import {Card} from '../Card/Card';
-import {useSelector} from 'react-redux';
-
-import {selectBoard} from '../../redux/selectors';
 import {Modal} from '../Modal/Modal';
+import {useSelectData} from '../../hooks/useSelectData';
+import {useCreateCard} from './hooks/useCreateCard';
 
 interface Props {
   name: string;
@@ -12,14 +12,9 @@ interface Props {
 }
 
 export const Board: FC<Props> = ({name, id}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const dispatch = useDispatch<AppDispatch>();
-  const cards = useSelector(selectBoard)?.cards.filter(
-    (card) => card.status === id
-  );
-  const toggle = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  const {board, cards} = useSelectData(id);
+
+  const {handleSubmit, toggleModal, isModalOpen} = useCreateCard(id);
 
   return (
     <div className="w-full">
@@ -33,14 +28,19 @@ export const Board: FC<Props> = ({name, id}) => {
                 title={card.title}
                 description={card.description}
                 id={card._id}
+                status={id}
               />
             ))}
           </div>
 
-          <Button text="Add task" onClick={toggle} />
+          <Button
+            text="Add task"
+            onClick={toggleModal}
+            isActive={Boolean(!board._id)}
+          />
         </div>
       </div>
-      {isModalOpen && <Modal onClick={toggle} tableId={id} />}
+      {isModalOpen && <Modal onClick={toggleModal} onSubmit={handleSubmit} />}
     </div>
   );
 };

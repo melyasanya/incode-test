@@ -15,3 +15,9 @@ export interface ICard {
 export interface ErrorType {
   message: string;
 }
+
+export type Inputs = {
+  title: string;
+  description: string;
+  status: string;
+};

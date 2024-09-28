@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {
   createBoard,
   createCard,
@@ -8,15 +8,26 @@ import {
   updateBoard,
   updateCard,
 } from './thunk';
-import {IBoard, ICard} from '../constants/interface';
+import {ErrorType, IBoard} from '../constants/interface';
+import {
+  handleCreateBoardFulfilled,
+  handleCreateCardsFulfilled,
+  handleDeleteBoardFulfilled,
+  handleDeleteCardFulfilled,
+  handleFetchBoardFulfilled,
+  handlePending,
+  handleRejected,
+  handleUpdateBoardFulfilled,
+  handleUpdateCardFulfilled,
+} from './handlers';
 
-interface State {
+export interface State {
   isLoading: boolean;
-  error: string | null;
+  error: ErrorType | null | undefined;
   boards: IBoard;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isLoading: false,
   error: null,
   boards: {
@@ -24,78 +35,6 @@ const initialState: State = {
     name: '',
     cards: [],
   },
-};
-
-const handlePending = (state: State, _: any) => {
-  state.isLoading = true;
-};
-
-const handleRejected = (state: State, action: any) => {
-  state.isLoading = false;
-  state.error = action.payload;
-};
-
-const handleFetchBoardFulfilled = (state: State, action: any) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards = action.payload;
-};
-
-const handleCreateBoardFulfilled = (
-  state: State,
-  action: PayloadAction<IBoard>
-) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards = action.payload;
-};
-
-const handleDeleteBoardFulfilled = (state: State, _: PayloadAction) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards = initialState.boards;
-};
-
-const handleUpdateBoardFulfilled = (
-  state: State,
-  action: PayloadAction<IBoard>
-) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards = action.payload;
-};
-
-const handleCreateCardsFulfilled = (
-  state: State,
-  action: PayloadAction<ICard>
-) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards.cards.push(action.payload);
-};
-
-const handleDeleteCardFulfilled = (
-  state: State,
-  action: PayloadAction<string>
-) => {
-  state.isLoading = false;
-  state.error = null;
-  state.boards.cards = state.boards.cards.filter(
-    (card) => card._id !== action.payload
-  );
-};
-
-const handleUpdateCardFulfilled = (
-  state: State,
-  action: PayloadAction<ICard>
-) => {
-  state.isLoading = false;
-  state.error = null;
-
-  const updatedCard = action.payload;
-  state.boards.cards = state.boards.cards.map((card) =>
-    card._id === updatedCard._id ? updatedCard : card
-  );
 };
 
 const boardsSlice = createSlice({
