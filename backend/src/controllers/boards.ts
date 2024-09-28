@@ -1,6 +1,5 @@
 import {Request, Response} from 'express';
 import {Board} from '../models/board';
-// import {generateUniqueId} from '../helpers/generateId';
 import {httpError} from '../helpers/httpError';
 
 export const createBoard = async (req: Request, res: Response) => {

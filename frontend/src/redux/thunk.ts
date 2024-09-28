@@ -3,7 +3,7 @@ import axios, {AxiosError} from 'axios';
 import {ErrorType, IBoard, ICard} from '../constants/interface';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://incode-test.onrender.com',
+  baseURL: import.meta.env.VITE_AXIOS_URL,
 });
 
 export const fetchBoard = createAsyncThunk<

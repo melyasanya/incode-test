@@ -20,8 +20,12 @@ export const Card: FC<Props> = ({title, description, id, status}) => {
         <p>{title}</p>
         <p>{description}</p>
         <div className="flex justify-between">
-          <p onClick={handleDelete}>Delete task</p>
-          <p onClick={toggleModal}>Edit task</p>
+          <p className="cursor-pointer" onClick={handleDelete}>
+            Delete task
+          </p>
+          <p className="cursor-pointer" onClick={toggleModal}>
+            Edit task
+          </p>
           {isModalOpen && (
             <Modal
               title={title}

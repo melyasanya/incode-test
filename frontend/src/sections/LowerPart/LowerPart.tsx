@@ -15,7 +15,9 @@ export const LowerPart = () => {
       {board._id && (
         <>
           <p>Your board id is {board._id}</p>
-          <p onClick={handleDelete}>Delete this board</p>
+          <p className="cursor-pointer" onClick={handleDelete}>
+            Delete this board
+          </p>
         </>
       )}
     </>

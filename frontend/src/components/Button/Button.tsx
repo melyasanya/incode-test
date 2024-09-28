@@ -3,7 +3,7 @@ import type {FC} from 'react';
 interface Props {
   text: string;
   onClick: () => void;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 export const Button: FC<Props> = ({text, onClick, isActive}) => {
